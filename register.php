@@ -1,15 +1,19 @@
-<?php
-    session_start();
+<?php 
+ session_start();
+
+ if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])){
+     header("Location:dashboard.php");
+ }
+include_once('lib/header.php')
 
 ?>
-<?php include_once('lib/header.php')  ?>
   <header>
     <p> Welcome, Please register, All fields (*) are compulsory</p>
   </header>  
  <form method="POST" action="processregistartion.php">
      <p><?php
          if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
-            echo  $_SESSION['error'];
+            echo '<span style="color:red">' . $_SESSION['error'] . ' </span>';
            
            session_destroy();
          }

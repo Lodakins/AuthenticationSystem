@@ -23,20 +23,34 @@ if($errorcount > 0){
     header("Location:register.php");
 }else{
 
+    $allUsers = scandir("db/users");
+    $countUsers = count($allUsers);
+
+    $newUserId = $countUsers++;
+
+    for($counter =0; $counter < $countUsers; $counter++){
+        if( $allUsers[$counter] == $email .".json"){
+            $_SESSION['error'] = 'Users already Exist';
+            header("Location:register.php");
+            die();
+        }
+    }
+
+
     $userObject =[
-        "id"=>1,
+        "id"=>$newUserId,
         "first_name" =>$first_name,
         "last_name"=>$last_name,
         "email"=>$email,
-        "password"=>$password,
+        "password"=>password_hash( $password,PASSWORD_DEFAULT),
         "gender"=>$gender,
         "designation"=>$designation,
         "department"=>$department
     ];
     echo "Registration Successfull";
-    file_put_contents("db/users/" . $first_name . $last_name . "json",json_encode($userObject));
+    file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
     $_SESSION['message']="You can now login, registration successfull";
-    //header("Location:login.php");
+     header("Location:login.php");
 }
 
 ?>
