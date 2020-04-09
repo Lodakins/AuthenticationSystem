@@ -1,9 +1,7 @@
 <?php 
  session_start();
+ require_once("lib/alert.php");
 
- if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])){
-     header("Location:dashboard.php");
- }
 include_once('lib/header.php')
 
 ?>
@@ -12,10 +10,20 @@ include_once('lib/header.php')
   </header>  
  <form method="POST" action="processregistartion.php">
      <p><?php
-         if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
-            echo '<span style="color:red">' . $_SESSION['error'] . ' </span>';
-           
-           session_destroy();
+
+            error();
+            
+         if(isset($_SESSION['emailerror']) && !empty($_SESSION['emailerror'])){
+            echo '<span style="color:red">' . $_SESSION['emailerror'] . ' </span> <br/>';
+                if(session_id()){
+                session_destroy();
+                 }
+         } 
+         if(isset($_SESSION['nameerror']) && !empty($_SESSION['nameerror'])){
+            echo '<span style="color:red">' .$_SESSION['nameerror'] . ' </span> <br/>';  
+                if(session_id()){
+                session_destroy();
+                 }
          }
          ?>
      </p>
@@ -27,7 +35,7 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['first_name'];
                 }
          ?>
-        type="text" name="first_name" placeholder="First Name" />
+        type="text" name="first_name" placeholder="First Name" required />
     </p>
     <p> 
         <label> Last Name</label><br/>
@@ -37,7 +45,7 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['last_name'];
                 }
          ?>
-        type="text" name="last_name" placeholder="Surname" />
+        type="text" name="last_name" placeholder="Surname"  required/>
     </p>
     <p> 
         <label> Email </label><br/>
@@ -47,11 +55,11 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['email'];
                 }
          ?>
-        type="text" name="email" placeholder="polarisd@ii.com"  />
+        type="text" name="email" placeholder="polarisd@ii.com" required />
     </p>
     <p> 
         <label> Password</label><br/>
-        <input  type="password" name="password" placeholder="Password"  />
+        <input  type="password" name="password" placeholder="Password"  required />
     </p>
     <p> 
         <label> Gender</label><br/>

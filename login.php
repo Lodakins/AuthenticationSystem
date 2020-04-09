@@ -1,5 +1,9 @@
 <?php 
  session_start();
+ require_once("lib/alert.php");
+ if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])){
+  header("Location:dashboard.php");
+}
 include_once('lib/header.php') 
  ?>
   <header>
@@ -7,16 +11,9 @@ include_once('lib/header.php')
   </header>  
  <form method="POST" action="processlogin.php">
      <p><?php
-         if(isset($_SESSION['message']) && !empty($_SESSION['message'])){
-            echo '<span style="color:green">' . $_SESSION['message'] . ' </span>';
-           
-           session_destroy();
-         }
-         if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
-            echo '<span style="color:red">' . $_SESSION['error'] . ' </span>';
-           
-           session_destroy();
-         }
+       error1();
+       error();
+        message();
          ?>
      </p>
      <p> 

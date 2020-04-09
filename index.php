@@ -1,12 +1,12 @@
-<?php include_once('lib/header.php')  ?>
+<?php session_start();
+require_once("lib/alert.php");
+loggedin();
+
+
+include_once('lib/header.php')  ?>
   <header>
     <h1> WELCOME TO SNG HOSPITAL </h1>
   </header>  
- <form method="POST" action="">
-    <p> 
-        <label> Username </label><br/>
-        <input type="text" name="username" />4
-    </p>
- </form>
+ <p> Welcome to sng hospital, where you can treat Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut iusto, repudiandae hic voluptatem commodi praesentium. Vero tenetur corporis, blanditiis enim quidem dolores sapiente, voluptatum natus expedita repudiandae, minus quaerat temporibus!</p>
 
 <?php include_once('lib/footer.php')  ?>

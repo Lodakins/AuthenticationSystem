@@ -9,7 +9,7 @@ $password=$_POST['password'] != null ? $_POST['password'] : $errorcount++;
 $_SESSION['email']= $email;
 if($errorcount > 0){
 
-    $session_error= "You have" . $errorcount . " errors";
+    $session_error= "You have" . $errorcount . " empty field";
     if($errorcount > 1) {
         $session_error.="s";
     }
@@ -22,7 +22,7 @@ if($errorcount > 0){
     $newUserId = $countUsers++;
 
     for($counter =0; $counter < $countUsers; $counter++){
-        if( $allUsers[$counter] == $email .".json"){
+        if( $allUsers[$counter] == $email .".json"){ 
           
            $file = file_get_contents("db/users/". $email.".json");
            $userObject = json_decode($file);
@@ -30,9 +30,39 @@ if($errorcount > 0){
            
            if(password_verify($password,$dbpassword)){
                 $_SESSION['loggedin']= $userObject->id;
-               header("Location: dashboard.php");
-           }
+                $_SESSION['fullname']= $userObject->first_name . " " . $userObject->last_name;
+                $_SESSION['role']= $userObject->designation;
+                $_SESSION['department']=$userObject->department;
+                $_SESSION['dob']=$userObject->dob;
+
+               
+                date_default_timezone_set("Africa/Lagos");
+                $lastLog = date("Y/m/d:h:i:sa");
+                if($userObject->logged == null || $userObject->logged == ""){
+                    $_SESSION['lastlogin']= "First Time Logging in, welcome";
+                }else{
+                    $_SESSION['lastlogin']= $userObject->logged;
+                }
+                $userObject->logged=$lastLog;
+                unlink("db/users/". $email .".json");
+               
+                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
+
+                if($userObject->designation == "admin"){
+                    header("Location:admindashboard.php");
+                    die();
+                }else{
+                    header("Location:dashboard.php");
+                    die();
+                }
+               
+              
+           }else{
+            $_SESSION['error'] = "Invalid Email / Password";
+            header("Location: login.php");
             die();
+           }
+           
         }
     }
     $_SESSION['error'] = "Invalid Email / Password";
