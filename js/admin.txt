@@ -1,0 +1,2 @@
+email: superadmin@tech.com;
+password: admin@#$%1;

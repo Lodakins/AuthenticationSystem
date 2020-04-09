@@ -12,3 +12,4 @@ To use AuthenticationSystem you must have either wamp or xampp server installed 
     * copy and paste the __AuthenticationSystem folder__ there
 * Start your wamp / xampp server.
 * Open your browser and type in the url __http://localhost/AuthenticationSystem__
+### For super admin right details are found in "js/admin.txt".
