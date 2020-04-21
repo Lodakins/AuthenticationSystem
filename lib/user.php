@@ -73,18 +73,18 @@ session_destroy();
 function viewAllUsers(){
     $allUsers = scandir("db/users");
     $countUsers = count($allUsers);
-    echo "<table> <thead><tr><th> First Name</th><th>Last Name</th><th>
+    echo '<table class="table table-striped"><thead class="thead-dark"><tr><th> First Name</th><th>Last Name</th><th>
     Email</th> <th> Gender</th> <th> Designation</th> <th> Department</th>
-    </tr></thead><tbody>";
+    </tr></thead><tbody>';
     for($counter =2; $counter < $countUsers; $counter++){
-        $file = file_get_contents("db/users/".$allUsers[$counter].".json");
+        $file = file_get_contents("db/users/".$allUsers[$counter]);
         $userObject = json_decode($file);
-        echo "<tr><td>".$$userObject->first_name."</td>
-        <td>".$$userObject->last_name."</td><
-        td>".$$userObject->email."</td>
-        <td>".$$userObject->gender."</td>
-        <td>".$$userObject->designation."</td>
-        <td>".$$userObject->department."</td></tr>";
+        echo "<tr><td>".$userObject->first_name."</td>
+        <td>".$userObject->last_name."</td>
+        <td>".$userObject->email."</td>
+        <td>".$userObject->gender."</td>
+        <td>".$userObject->designation."</td>
+        <td>".$userObject->department."</td></tr>";
 
     }
     echo "</tbody></table>";

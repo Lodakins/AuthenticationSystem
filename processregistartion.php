@@ -45,7 +45,7 @@ if (!(preg_match("/^[A-Za-z]{2,}$/", $last_name))){
 
 if($errorcount > 0 ){
     setAlert("error","There are " . $errorcount ."empty fields");
-        header("Location:register.php");
+        redirect("register.php");
         die();
 //     ///^[A-Za-z]+$/
 //     if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -65,7 +65,7 @@ if($errorcount > 0 ){
     $countUsers = count($allUsers);
 
     if ($validate > 0){
-        header("Location:register.php");
+        redirect("register.php");
         die();
     }
 
@@ -74,7 +74,7 @@ if($errorcount > 0 ){
     for($counter =0; $counter < $countUsers; $counter++){
         if( $allUsers[$counter] == $email .".json"){
             $_SESSION['emailerror'] = 'Users already Exist';
-            header("Location:register.php");
+            redirect("register.php");
             die();
         }
     }
@@ -94,8 +94,8 @@ if($errorcount > 0 ){
   
     file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
     setAlert("message","You can now login, registration successfull");
-   redirect("login.php");
-   die();
+    redirect("login.php");
+    die();
 }
 
 ?>

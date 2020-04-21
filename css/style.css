@@ -1,6 +1,36 @@
+html{ height:100%; }
+body{ min-height:100%; padding:0; margin:0; position:relative; }
+header{ height:50px; background:#fff; }
+footer{ background:PapayaWhip; }
+
+/* Trick: */
+body {
+  position: relative;
+}
+
+body::after {
+  content: '';
+  display: block;
+  height: 50px; /* Set same as footer's height */
+}
 header h1{
     color: #333;
 }
 .hide{
     display: none;
+}
+.formContainer{
+    border:1px solid rgba(0,0,0,.6);
+    padding: 30px;
+}
+ul li{
+    list-style: none;
+    display: inline-block;
+    margin-left: 30px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
 }

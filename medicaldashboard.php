@@ -16,9 +16,15 @@ include_once('lib/header.php')
 <p> Date of Registration:  <?php  echo  $_SESSION['dob'];   ?></p> </p>
 <p> Date of Last Login:  <?php echo  $_SESSION['lastlogin'];   ?></p> </p>
 
-<p> Appointments </p>
-<?php
+<h3 class="text-center mb-3">Appointments </h3>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+    <?php
     viewAppointment($_SESSION['department']);
-?>
+    ?>
+        </div>
+    </div>
+</section>
 
 <?php include_once('lib/footer.php')  ?>

@@ -53,11 +53,16 @@ function setAlert1($type="message",$content=""){
 
 function printAlert(){
 $types=['error','message','info'];
-$colors=['red',"green","grey"];
+$colors=['alert-warning',"alert-success","alert-secondary"];
 
 for($i=0 ; $i < count($types) ;$i++){
   if(isset($_SESSION[$types[$i]]) && !empty($_SESSION[$types[$i]])){
-    echo '<span style="color:'.$colors[$i] .' ">' . $_SESSION[$types[$i]] . ' </span> <br/>';
+   echo '<div class="alert '.$colors[$i] .'" alert-warning alert-dismissible fade show" role="alert">
+        '.  $_SESSION[$types[$i]] .'
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>';
     session_destroy();
   } 
 }
@@ -66,11 +71,16 @@ for($i=0 ; $i < count($types) ;$i++){
 
 function printAlert1(){
   $types=['error','message','info'];
-  $colors=['red',"green","grey"];
+  $colors=['alert-warning',"alert-success","alert-secondary"];
   
   for($i=0 ; $i < count($types) ;$i++){
     if(isset($_COOKIE[$types[$i]])){
-      echo '<span style="color:'.$colors[$i] .' ">' . $_COOKIE[$types[$i]] . ' </span> <br/>';
+      echo '<div class="alert '.$colors[$i] .'" alert-warning alert-dismissible fade show" role="alert">
+        '.  $_COOKIE[$types[$i]] .'
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>';
       setcookie($types[$i],"",time()-36000);
     } 
   }

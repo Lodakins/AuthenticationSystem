@@ -12,7 +12,10 @@ if(!is_user_loggedin() && !is_token_set()){
 <h1> Resest Password </h1>
 <p> Reset password associated with your account: [email] </p>
 
-<form action="processreset.php" method="POST">
+<section class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+<form action="processreset.php" method="POST"   class="formContainer">
 <p>
     <?php
         error();
@@ -37,16 +40,21 @@ if(!is_user_loggedin() && !is_token_set()){
                     echo "value='" . $_SESSION['email'] . "'";
                 }
          ?>
-        type="text" name="email" placeholder="polarisd@ii.com"  />
+        type="text" name="email" placeholder="polarisd@ii.com" class="form-control"  />
         </p>
         <p> 
         <label> Enter New Password</label><br/>
-        <input  type="password" name="password" placeholder="Password"  />
+        <input  type="password" name="password" placeholder="Password" class="form-control"  />
          </p>
          <p>
-        <button type="submit"> Reset Password </button>
+        <button type="submit" class="btn  btn-primary btn-lg btn-block"> Reset Password </button>
         </p>
 </form>
+</div>
+</div>
+</section>  
+
+<?php include_once('lib/footer.php')  ?>
 
 
 

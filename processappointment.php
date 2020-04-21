@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once("lib/alert.php");
-require_once("lib/user.php");
+include_once("lib/user.php");
 require_once("lib/functions.php");
 
 $errorcount=0;
@@ -9,7 +9,7 @@ $date_of_appointment=$_POST['date_of_appointment'] != null ? $_POST['date_of_app
 $time_of_appointment=$_POST['time_of_appointment'] != null ? $_POST['time_of_appointment'] : $errorcount++;
 $nature_of_appointment=$_POST['nature_of_appointment'] != null ? $_POST['nature_of_appointment'] : $errorcount++;
 $initcomplaint=$_POST['initcomplaint'] != null ? $_POST['initcomplaint'] : $errorcount++;
-$department=$_POST['department'] != null ? $_POST['department'] : $errorcount++;
+$department=$_POST['depart'] != null ? $_POST['depart'] : $errorcount++;
 $email=$_POST['email'] != null ? $_POST['email'] : $errorcount++;
 $patient_name=$_POST['name'] != null ? $_POST['name'] : $errorcount++;
 
@@ -18,11 +18,11 @@ $_SESSION['date_of_appointment'] = $_POST['date_of_appointment'];
 $_SESSION['time_of_appointment'] = $_POST['time_of_appointment'];
 $_SESSION['nature_of_appointment'] = $_POST['nature_of_appointment'];
 $_SESSION['initcomplaint'] = $_POST['initcomplaint'];
-$_SESSION['department'] = $_POST['department'];
+$_SESSION['depart'] = $_POST['depart'];
 
 
 if($errorcount > 0 ){
-        setAlert("error","There are " . $errorcount ."empty fields");
+        setAlert1("error","There are " . $errorcount ."empty fields");
         header("Location:patientdashboard.php");
         die();
 //     ///^[A-Za-z]+$/

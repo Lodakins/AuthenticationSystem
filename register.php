@@ -7,23 +7,36 @@ include_once('lib/header.php')
 
 ?>
   <header>
-    <p> Welcome, Please register, All fields (*) are compulsory</p>
+    <h3 class="text-center"> Welcome, Please register. All fields are compulsory</h3>
   </header>  
- <form method="POST" action="processregistartion.php">
+  <section class="container mb-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+ <form method="POST" action="processregistartion.php"  class="formContainer">
      <p><?php
 
            printAlert();
          if(isset($_SESSION['emailerror']) && !empty($_SESSION['emailerror'])){
-            echo '<span style="color:red">' . $_SESSION['emailerror'] . ' </span> <br/>';
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            '.  $_SESSION['emailerror'] .'
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>';
                 if(session_id()){
-                session_destroy();
+                 session_destroy();
                  }
          } 
          if(isset($_SESSION['nameerror']) && !empty($_SESSION['nameerror'])){
-            echo '<span style="color:red">' .$_SESSION['nameerror'] . ' </span> <br/>';  
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            '.  $_SESSION['nameerror'] .'
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>';
                 if(session_id()){
-                session_destroy();
-            }
+                 session_destroy();
+                 }
          }
          ?>
      </p>
@@ -35,7 +48,7 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['first_name'];
                 }
          ?>
-        type="text" name="first_name" placeholder="First Name" required />
+        type="text" name="first_name" placeholder="First Name" required class="form-control" />
     </p>
     <p> 
         <label> Last Name</label><br/>
@@ -45,7 +58,7 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['last_name'];
                 }
          ?>
-        type="text" name="last_name" placeholder="Surname"  required/>
+        type="text" name="last_name" placeholder="Surname"  class="form-control" required/>
     </p>
     <p> 
         <label> Email </label><br/>
@@ -55,15 +68,15 @@ include_once('lib/header.php')
                     echo "value=" . $_SESSION['email'];
                 }
          ?>
-        type="text" name="email" placeholder="polarisd@ii.com" required />
+        type="text" name="email" placeholder="polarisd@ii.com"  class="form-control" required />
     </p>
     <p> 
         <label> Password</label><br/>
-        <input  type="password" name="password" placeholder="Password"  required />
+        <input  type="password" name="password" placeholder="Password" class="form-control" required />
     </p>
     <p> 
         <label> Gender</label><br/>
-       <select name="gender" required>
+       <select name="gender" class="form-control" required>
        <option value=""> -- Select a gender---</option>
        
            <option 
@@ -84,7 +97,7 @@ include_once('lib/header.php')
     </p>
     <p> 
         <label> Designation</label><br/>
-       <select name="designation" required>
+       <select name="designation" class="form-control" required>
             <option value=""> -- Select Designation-- </option>
            <option
            <?php
@@ -104,7 +117,7 @@ include_once('lib/header.php')
     </p>
     <p> 
         <label> Department</label><br/>
-        <select name="department">
+        <select name="department" class="form-control" required>
             <option>--SELECT--</option>
             <option 
             <?php 
@@ -130,8 +143,11 @@ include_once('lib/header.php')
         </select>
     </p>
     <p> 
-       <button type="submit">Register </button>
+       <button type="submit" class="btn  btn-primary btn-lg btn-block">Register </button>
     </p>
  </form>
+ </div>
+    </div>
+  </section>  
 
 <?php include_once('lib/footer.php')  ?>
