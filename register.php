@@ -44,7 +44,7 @@ include_once('lib/header.php')
         <label> First Name</label><br/>
         <input 
          <?php
-                if(session_set("first_name")){
+                if(isset($_SESSION["first_name"])){
                     echo "value=" . $_SESSION['first_name'];
                 }
          ?>
@@ -54,7 +54,7 @@ include_once('lib/header.php')
         <label> Last Name</label><br/>
         <input 
         <?php
-                if(session_set("last_name")){
+                if(isset($_SESSION["last_name"])){
                     echo "value=" . $_SESSION['last_name'];
                 }
          ?>
