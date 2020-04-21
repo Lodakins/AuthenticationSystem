@@ -1,68 +1,46 @@
 <?php
 session_start();
-
+require_once("lib/alert.php");
+require_once("lib/email.php");
+require_once("lib/token.php");
+require_once("lib/user.php");
 
 $errorcount=0;
 $email=$_POST['email'] != null ? $_POST['email'] : $errorcount++;
 
 if($errorcount > 0){
-    $_SESSION['error'] = 'Email cannot be empty';
+    setAlert('error',"Email cannot be empty");
     header("Location:forgotpassword.php");
+    die();
 }else{
 
-    $allUsers = scandir("db/users");
-    $countUsers = count($allUsers);
+        $userObject = findUsers($email);
 
-    for($counter =0; $counter < $countUsers; $counter++){
-        if( $allUsers[$counter] == $email .".json"){
-           echo "You can now proceed to reset email";
-
-           
-           /**
-            *  TOKEN GENERATION
-            */
-            $token="";
-
-            $alphabets=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'];
-
-             for( $i=0; $i < 26; $i++ ){
-                $index= mt_rand(0,count($alphabets) - 1);
-                $token.=$alphabets[$index];  
-            }
-
+        if($userObject){    
+            $token = generate_token();
             $subject="Password Reset Link";
-           $message="Password request reset has been initiated from your account, if you did not initiate this reset please ignore this message
-           , otherwise, visit: localhost/AuthenticationSystem/reset.php?token=" . $token;
-           $headers="From: no-reply@snh.com" . "\r\n". "CC: somebody@example.com";
-
-
-
-            file_put_contents("db/token/" . $email . ".json",json_encode(['token'=>$token]));
-            /**
-             * 
-             * END OF TOKEN GENERATION
-             */
+           $message="Password request reset has been initiated from your account, if you did not initiate this reset please ignore this message, otherwise, visit: localhost/AuthenticationSystem/resetpassword.php?token=" . $token;
+            $tokenObject=[
+                "token"=>$token
+            ];
  
-           $try= mail($email,$subject,$message,$headers);
-           
+           $try= send_mail($subject,$message,$email);
+      
            if($try){
-            $_SESSION['message'] = 'Password Reset has been sent to your email';
-            file_put_contents("db/token/" . $email . ".json",json_encode(['token'->$token]));
-            header("Location:resetpassword.php");
+            setAlert("message",'Password Reset has been sent to your email');
+            file_put_contents("db/token/" . $email . ".json",json_encode($tokenObject));
+            redirect("login.php");
             die();
            }else{
-            $_SESSION['error'] = 'Something went wrong, we could not send email to '. $email;
-            header("Location:forgotpassword.php");
+            setAlert("error",'Something went wrong, we could not send email to '. $email);
+            redirect("forgotpassword.php");
             die();
            }
-
-        }
        
     }
-
-    $_SESSION['error'] = 'Email not registered with us';
-    header("Location:login.php");
-   
+    setAlert('error','Email not registered with us');
+   redirect("login.php");
+    die();
 }
 
 ?>

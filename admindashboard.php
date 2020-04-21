@@ -3,6 +3,7 @@
  if(!isset($_SESSION['loggedin']) && empty($_SESSION['loggedin'])){
      header("Location: login.php");
  }
+ require_once("lib/user.php");
 include_once('lib/header.php') 
  ?>
 
@@ -15,6 +16,8 @@ include_once('lib/header.php')
 <p> Date of Last Login:  <?php echo  $_SESSION['lastlogin'];   ?></p> </p>
 <p> <a href="register.php">Add User</a> </p>
 
-
+<?php 
+    viewAllUsers();
+?>
 
 <?php include_once('lib/footer.php')  ?>

@@ -1,4 +1,9 @@
 <?php session_start();
+require_once("lib/alert.php");
+require_once("lib/email.php");
+require_once("lib/token.php");
+require_once("lib/user.php");
+
 
 $errorcount=0;
 $validate=0;
@@ -9,12 +14,6 @@ $password=$_POST['password'] != null ? $_POST['password'] : $errorcount++;
 $gender=$_POST['gender'] != null ? $_POST['gender'] : $errorcount++;
 $designation=$_POST['designation'] != null ? $_POST['designation'] : $errorcount++;
 $department=$_POST['department'] != null ? $_POST['department'] : $errorcount++;
-
-
-
-if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $_SESSION['emailerror']= "Enter a vaild email";
-}
 
 // superadmin paas: admin@#$%1;
 // superadmin email: superadmin@tech.com;
@@ -45,8 +44,9 @@ if (!(preg_match("/^[A-Za-z]{2,}$/", $last_name))){
 
 
 if($errorcount > 0 ){
-    $_SESSION['error']="Ther are " . $errorcount ."empty fields";
+    setAlert("error","There are " . $errorcount ."empty fields");
         header("Location:register.php");
+        die();
 //     ///^[A-Za-z]+$/
 //     if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 //         //Valid email!
@@ -66,6 +66,7 @@ if($errorcount > 0 ){
 
     if ($validate > 0){
         header("Location:register.php");
+        die();
     }
 
     $newUserId = $countUsers++;
@@ -90,10 +91,11 @@ if($errorcount > 0 ){
         "department"=>$department,
         "dob"=>date("Y/m/d")
     ];
-    echo "Registration Successfull";
+  
     file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
-    $_SESSION['message']="You can now login, registration successfull";
-    header("Location: login.php");
+    setAlert("message","You can now login, registration successfull");
+   redirect("login.php");
+   die();
 }
 
 ?>

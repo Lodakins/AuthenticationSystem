@@ -1,8 +1,9 @@
 <?php 
  session_start();
  require_once("lib/alert.php");
-
+ require_once("lib/validate.php");
 include_once('lib/header.php')
+
 
 ?>
   <header>
@@ -11,8 +12,7 @@ include_once('lib/header.php')
  <form method="POST" action="processregistartion.php">
      <p><?php
 
-            error();
-            
+           printAlert();
          if(isset($_SESSION['emailerror']) && !empty($_SESSION['emailerror'])){
             echo '<span style="color:red">' . $_SESSION['emailerror'] . ' </span> <br/>';
                 if(session_id()){
@@ -23,7 +23,7 @@ include_once('lib/header.php')
             echo '<span style="color:red">' .$_SESSION['nameerror'] . ' </span> <br/>';  
                 if(session_id()){
                 session_destroy();
-                 }
+            }
          }
          ?>
      </p>
@@ -31,7 +31,7 @@ include_once('lib/header.php')
         <label> First Name</label><br/>
         <input 
          <?php
-                if(isset($_SESSION['first_name'])){
+                if(session_set("first_name")){
                     echo "value=" . $_SESSION['first_name'];
                 }
          ?>
@@ -41,7 +41,7 @@ include_once('lib/header.php')
         <label> Last Name</label><br/>
         <input 
         <?php
-                if(isset($_SESSION['last_name'])){
+                if(session_set("last_name")){
                     echo "value=" . $_SESSION['last_name'];
                 }
          ?>
@@ -104,13 +104,30 @@ include_once('lib/header.php')
     </p>
     <p> 
         <label> Department</label><br/>
-        <input 
-        <?php
-                if(isset($_SESSION['department'])){
-                    echo "value=" . $_SESSION['department'];
-                }
-         ?>
-        type="text" name="department" placeholder="Department" required />
+        <select name="department">
+            <option>--SELECT--</option>
+            <option 
+            <?php 
+            if(isset($_SESSION["department"]) &&  $_SESSION["department"]== "laboratory"){
+                echo "selected"; 
+            }
+            ?> value="laboratory"> Laboratory</option>
+            <option <?php 
+            if(isset($_SESSION["department"]) &&  $_SESSION["department"]== "icu"){
+                echo "selected"; 
+            }
+            ?>value="icu"> Intensive Care Unit</option>
+            <option <?php 
+            if(isset($_SESSION["department"]) &&  $_SESSION["department"]== "pharmacy"){
+                echo "selected"; 
+            }
+            ?>value="pharmacy"> Pharmacy</option>
+            <option <?php 
+            if(isset($_SESSION["department"]) &&  $_SESSION["department"]== "child"){
+                echo "selected"; 
+            }
+            ?>value="child"> Child Care</option>
+        </select>
     </p>
     <p> 
        <button type="submit">Register </button>

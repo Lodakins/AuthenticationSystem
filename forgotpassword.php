@@ -1,16 +1,14 @@
 <?php 
  session_start();
 include_once('lib/header.php');
+require_once('lib/alert.php');
  ?>
 <h1> Forgot Password </h1>
 <p>  Provide the email associated with your password </p>
 
 <form action="processforgot.php" method="POST">
 <p><?php
-         if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
-            echo '<span style="color:red">' . $_SESSION['error'] . ' </span>';
-           session_destroy();
-         }
+        printAlert();
          ?>
      </p>
 <p> 

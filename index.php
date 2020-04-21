@@ -1,5 +1,6 @@
 <?php session_start();
 require_once("lib/alert.php");
+require_once('lib/user.php');
 loggedin();
 
 

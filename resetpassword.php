@@ -1,9 +1,12 @@
 <?php 
  session_start();
 include_once('lib/header.php');
-if(!isset($_GET['token']) && !isset($_SESSION['token'])){
-    $_SESSION['error1']=" You are not authorized to view this page";
-    header("Location: login.php");
+require_once("lib/user.php");
+require_once("lib/alert.php");
+if(!is_user_loggedin() && !is_token_set()){
+    setAlert("error"," You are not authorized to view that page");
+    redirect("login.php");
+    die();
 }
  ?>
 <h1> Resest Password </h1>
@@ -12,20 +15,19 @@ if(!isset($_GET['token']) && !isset($_SESSION['token'])){
 <form action="processreset.php" method="POST">
 <p>
     <?php
-         if(isset($_SESSION['error']) && !empty($_SESSION['error'])){
-            echo '<span style="color:red">' . $_SESSION['error'] . ' </span>';
-           session_destroy();
-         }
+        error();
      ?>
      </p>
      <p>
+         <?php if(!is_user_loggedin()){  ?>
          <input
-         <?php if(isset($_SESSION['token'])){
+         <?php if(is_token_set_in_session()){
              echo "value='" . $_SESSION['token'] . "'";
          }else{
             echo "value='" . $_GET['token'] . "'";
         }
-        ?> type="hidden" value="<?php echo $_GET['token'] ?>"  name="token"/>
+        ?> type="hidden"  name="token"/>
+        <?php } ?>
      </p>
         <p> 
         <label> Email </label><br/>

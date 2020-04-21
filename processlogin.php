@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once("lib/alert.php");
+require_once("lib/user.php");
 
 
 $errorcount=0;
@@ -13,19 +15,12 @@ if($errorcount > 0){
     if($errorcount > 1) {
         $session_error.="s";
     }
-    $_SESSION['error'] = $session_error;
-    header("Location:login.php");
+    setAlert("error",$session_error);
+   redirect("login.php");
+    die();
 }else{
-    $allUsers = scandir("db/users");
-    $countUsers = count($allUsers);
-
-    $newUserId = $countUsers++;
-
-    for($counter =0; $counter < $countUsers; $counter++){
-        if( $allUsers[$counter] == $email .".json"){ 
-          
-           $file = file_get_contents("db/users/". $email.".json");
-           $userObject = json_decode($file);
+    $userObject = findUsers($email);
+        if($userObject){
            $dbpassword=$userObject->password;
            
            if(password_verify($password,$dbpassword)){
@@ -34,6 +29,7 @@ if($errorcount > 0){
                 $_SESSION['role']= $userObject->designation;
                 $_SESSION['department']=$userObject->department;
                 $_SESSION['dob']=$userObject->dob;
+                $_SESSION['email']=$userObject->email;
 
                
                 date_default_timezone_set("Africa/Lagos");
@@ -45,28 +41,30 @@ if($errorcount > 0){
                 }
                 $userObject->logged=$lastLog;
                 unlink("db/users/". $email .".json");
-               
-                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
+                
+                saveUsers($userObject);
 
-                if($userObject->designation == "admin"){
-                    header("Location:admindashboard.php");
+                if($userObject->designation =="admin"){
+                    redirect("admindashboard.php");
+                    die();
+                }else if($userObject->designation=="medical_team"){
+                    redirect("medicaldashboard.php");
                     die();
                 }else{
-                    header("Location:dashboard.php");
+                    redirect("patientdashboard.php");
                     die();
                 }
                
               
            }else{
-            $_SESSION['error'] = "Invalid Email / Password";
-            header("Location: login.php");
+           setAlert("error", "Invalid Email / Password");
+           redirect("login.php");
             die();
            }
            
         }
-    }
-    $_SESSION['error'] = "Invalid Email / Password";
-    header("Location: login.php");
+    setAlert("error", "Invalid Email / Password");
+    redirect("login.php");
     die();
 }
 

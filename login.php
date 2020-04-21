@@ -1,9 +1,8 @@
 <?php 
  session_start();
  require_once("lib/alert.php");
- if(isset($_SESSION['loggedin']) && !empty($_SESSION['loggedin'])){
-  header("Location:dashboard.php");
-}
+ require_once("lib/user.php");
+ loggedin();
 include_once('lib/header.php') 
  ?>
   <header>
@@ -11,9 +10,7 @@ include_once('lib/header.php')
   </header>  
  <form method="POST" action="processlogin.php">
      <p><?php
-       error1();
-       error();
-        message();
+          printAlert();
          ?>
      </p>
      <p> 
