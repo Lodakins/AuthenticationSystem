@@ -63,12 +63,13 @@ include_once('lib/header.php')
     </p>
     <p>
         <label> Initial Complaint</label> <br/>
-        <input  <?php 
+        <textarea cols="35" rows="12" name="initcomplaint" id="para1" class="form-control" placeholder="initial_complaint" required>
+        <?php 
             if(isset($_SESSION["initcomplaint"])){
-                echo 'value='.$_SESSION["initcomplaint"]; 
+                echo $_SESSION["initcomplaint"]; 
             }
             ?>
-        type="text" name="initcomplaint" placeholder="initial_complaint" class="form-control" required>
+        </textarea>
     </p>
     <p>
         <label> Department </label><br/>

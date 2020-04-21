@@ -51,6 +51,7 @@ function setAlert1($type="message",$content=""){
 
 }
 
+
 function printAlert(){
 $types=['error','message','info'];
 $colors=['alert-warning',"alert-success","alert-secondary"];
