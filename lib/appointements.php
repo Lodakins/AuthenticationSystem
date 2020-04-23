@@ -3,7 +3,6 @@ function saveAppointment($email,$department,$appointment){
     try{
         $allAppointment = scandir("db/appointment/".$department);
         $countAppointment = count($allAppointment);
-    
         for($counter=0; $counter < $countAppointment; $counter++){ 
             if($allAppointment[$counter] == $email .".json"){
                 setAlert1("error","you already have an appointment");

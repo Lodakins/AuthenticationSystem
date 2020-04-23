@@ -2,9 +2,11 @@
 session_start();
 require_once("lib/alert.php");
 include_once("lib/user.php");
-require_once("lib/functions.php");
+require_once("lib/appointements.php");
+require_once("lib/validate.php");
 
 $errorcount=0;
+$validatecount=0;
 $date_of_appointment=$_POST['date_of_appointment'] != null ? $_POST['date_of_appointment'] : $errorcount++;
 $time_of_appointment=$_POST['time_of_appointment'] != null ? $_POST['time_of_appointment'] : $errorcount++;
 $nature_of_appointment=$_POST['nature_of_appointment'] != null ? $_POST['nature_of_appointment'] : $errorcount++;
@@ -20,6 +22,7 @@ $_SESSION['nature_of_appointment'] = $_POST['nature_of_appointment'];
 $_SESSION['initcomplaint'] = $_POST['initcomplaint'];
 $_SESSION['depart'] = $_POST['depart'];
 
+if(!validate("date",$date_of_appointment))  $validatecount++;
 
 if($errorcount > 0 ){
         setAlert1("error","There are " . $errorcount ."empty fields");
@@ -38,6 +41,11 @@ if($errorcount > 0 ){
 // MAIL_FROM_ADDRESS=from@example.com
 // MAIL_FROM_NAME=Example
 }else{
+        if($validatecount >0){
+                redirect("patientdashboard.php");
+                die();
+        }
+
         $appointment=[
              'patient_name'=>$patient_name,
             'date_of_appointment'=>$date_of_appointment,

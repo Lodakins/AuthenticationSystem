@@ -16,28 +16,7 @@ include_once('lib/header.php')
      <p><?php
 
            printAlert();
-         if(isset($_SESSION['emailerror']) && !empty($_SESSION['emailerror'])){
-            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            '.  $_SESSION['emailerror'] .'
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            </div>';
-                if(session_id()){
-                 session_destroy();
-                 }
-         } 
-         if(isset($_SESSION['nameerror']) && !empty($_SESSION['nameerror'])){
-            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            '.  $_SESSION['nameerror'] .'
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            </div>';
-                if(session_id()){
-                 session_destroy();
-                 }
-         }
+           printValidationStatus();
          ?>
      </p>
     <p> 

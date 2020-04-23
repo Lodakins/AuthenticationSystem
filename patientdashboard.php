@@ -1,13 +1,15 @@
 <?php 
  session_start();
  require_once("lib/alert.php");
+ require_once("lib/validate.php");
  if(!isset($_SESSION['loggedin']) && empty($_SESSION['loggedin'])){
      header("Location:login.php");
  }
 include_once('lib/header.php') 
  
  ?>
-<p> <?php printAlert1();   ?> </p>
+<p> <?php  printValidationStatus();  ?> </p>
+<p> <?php  printAlert1();  ?> </p>
 <p> <?php printAlert();   ?> </p>
 <h2> Dashboard </h2>
 <p> Welcome, <?php echo $_SESSION['fullname'];   ?> You are logged in as (<?php echo $_SESSION['role']; ?>) and your ID is <?php  echo $_SESSION['loggedin'];?></p>

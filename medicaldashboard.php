@@ -1,7 +1,7 @@
 <?php 
  session_start();
  require_once("lib/alert.php");
- require_once("lib/functions.php");
+ require_once("lib/appointements.php");
  if(!isset($_SESSION['loggedin']) && empty($_SESSION['loggedin'])){
      header("Location:login.php");
  }

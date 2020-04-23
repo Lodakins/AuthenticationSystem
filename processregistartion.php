@@ -3,6 +3,7 @@ require_once("lib/alert.php");
 require_once("lib/email.php");
 require_once("lib/token.php");
 require_once("lib/user.php");
+require_once("lib/validate.php");
 
 
 $errorcount=0;
@@ -27,18 +28,13 @@ $_SESSION['designation'] = $_POST['designation'];
 $_SESSION['department'] = $_POST['department'];
 
 
-if(!(preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/", $email))) {
-    $_SESSION['emailerror']= "Enter a vaild email";
-    $validate++;
-}
-if (!preg_match("/^[A-Za-z]{2,}$/", $first_name)){
-    $_SESSION['nameerror']= " Name cannot contain number and not less than 2 characters";
-    $validate++;
-}
-if (!(preg_match("/^[A-Za-z]{2,}$/", $last_name))){ 
-    $_SESSION['nameerror']= " Name cannot contain number and not less than 2 characters";
-    $validate++;
-}
+if(!validate("email",$email))  $validate++; 
+
+if(!validate("name",$first_name))  $validate++; 
+
+if(!validate("name",$last_name))  $validate++; 
+
+
 
 
 
