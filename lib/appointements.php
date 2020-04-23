@@ -43,7 +43,7 @@ function viewAppointment($department){
            }
            echo "</tbody></table>";
         }else{
-            echo "<p> You have no appointment.. </p>";
+            echo '<p style="background-color:green;color:white; padding: 20px;"> You have no appointment.. </p>';
         }
        
     }catch( Exception $e){

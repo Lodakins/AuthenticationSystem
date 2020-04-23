@@ -8,7 +8,7 @@
 include_once('lib/header.php') 
  
  ?>
-<p> <?php    ?> </p>
+<p> <?php  printAlert();  ?> </p>
 <h2> Dashboard </h2>
 <p> Welcome, <?php echo $_SESSION['fullname'];   ?> You are logged in as (<?php echo $_SESSION['role']; ?>) and your ID is <?php  echo $_SESSION['loggedin'];?></p>
 <p> User Level Access: <?php  echo  $_SESSION['role']   ?></p> </p>
@@ -19,7 +19,7 @@ include_once('lib/header.php')
 <h3 class="text-center mb-3">Appointments </h3>
 <section class="container-fluid">
     <div class="row">
-        <div class="col-md-10 mx-auto">
+        <div class="col-md-12 mx-auto">
     <?php
     viewAppointment($_SESSION['department']);
     ?>

@@ -64,7 +64,9 @@ for($i=0 ; $i < count($types) ;$i++){
           <span aria-hidden="true">&times;</span>
         </button>
         </div>';
-    session_destroy();
+        if(session_id()){
+          unset ($_SESSION[$types[$i]]);
+          }
   } 
 }
 
