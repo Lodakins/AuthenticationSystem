@@ -53,7 +53,8 @@ if($errorcount > 0 ){
             'nature_of_appointment'=>$nature_of_appointment,
             'initcomplaint'=>$initcomplaint,
             'department'=>$department,
-            'email'=>$email
+            'email'=>$email,
+            'payment'=>'No Payment'
         ];
      saveAppointment($email,$department,$appointment);
 

@@ -25,6 +25,18 @@ $('#bookappointment').on('click',function(e){
     $('#appointmentContainer').toggle();
 })
 
+$('#showPayment').on('click',function(e){
+    e.preventDefault();
+    $('#paymentContainer').toggle();
+})
+
+function generateRandomText(){
+    let txref = "txref_";
+    for ($i = 0; $i < 7; $i++) {
+        txref += Math.random(0, 6);
+    }
+    return txref;
+  }
 
 
 });
