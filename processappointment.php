@@ -13,7 +13,7 @@ $nature_of_appointment=$_POST['nature_of_appointment'] != null ? $_POST['nature_
 $initcomplaint=$_POST['initcomplaint'] != null ? $_POST['initcomplaint'] : $errorcount++;
 $department=$_POST['depart'] != null ? $_POST['depart'] : $errorcount++;
 $email=$_POST['email'] != null ? $_POST['email'] : $errorcount++;
-$patient_name=$_POST['name'] != null ? $_POST['name'] : $errorcount++;
+$patient_name=$_SESSION['fullname'];
 
 
 $_SESSION['date_of_appointment'] = $_POST['date_of_appointment'];

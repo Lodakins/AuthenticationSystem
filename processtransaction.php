@@ -7,33 +7,33 @@ require_once("lib/validate.php");
 require_once("lib/transactions.php");
 
 
-
+$payerName = $_SESSION['fullname'];
 $paymentStatus = $_GET['status'];
 $paymentType = $_GET['type'];
 $paymentDate = $_GET['amount'];
 $paymentAmount = $_GET['date'];
 $paymentRef=$_GET['txref'];
 $department=$_GET['department'];
-
-$TXTREF='rave-909090';
-
 $email=$_SESSION['email'];
 
-updateAppointment($email,$department);
-
-saveTransaction($email,$paymentStatus,$paymentType,$paymentDate,$paymentAmount,$paymentRef,$department);
-
-echo "Payment Status: ".$paymentStatus; 
-echo "Payment Type: ".$paymentType; 
-echo "Payment Date: ".$paymentDate; 
-echo "Payment Amount: ".$paymentAmount; 
-echo "Payment Ref: ".$paymentRef; 
-echo "Payment department: ".$department; 
-
-setAlert1("message","Payment for appointment was successfull");
-redirect("patientdashboard.php");
- die();
-die();
+if($paymentStatus ==="successful"){
+    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate,$paymentAmount,$paymentRef,$department);
+    updateAppointment($email,$department);
+    setAlert1("message","Payment for appointment was successfull");
+    $subject="Payment Successfull";
+    $message="Your payment was successfull, you can now visit the department at your appointment time";               
+    send_mail($subject,$message,$email);
+    redirect("patientdashboard.php");
+    die();
+}else{
+    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate,$paymentAmount,$paymentRef,$department);
+    $subject="Payment Not Successfull";
+    $message="Your payment was not successfull, you cannot visit the department at your appointment time";               
+    send_mail($subject,$message,$email);
+    setAlert1("error","Payment for appointment was not successfull");
+    redirect("patientdashboard.php");
+    die();
+}
 
 
 

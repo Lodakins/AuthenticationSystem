@@ -67,9 +67,6 @@ function updateAppointment($email,$department){
                 $appointmentObject->payment="paid";
                     unlink("db/appointment/".$department."/". $email .".json");
                    file_put_contents("db/appointment/".$department."/" . $email . ".json",json_encode($appointmentObject));
-                     $subject="Payment Successfull";
-                    $message="Your payment was successfull, you can now visit the department at your appointment time";
-                    send_mail($subject,$message,$email);
             }
         }
 

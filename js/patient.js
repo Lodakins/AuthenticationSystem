@@ -22,12 +22,15 @@ $('#time_of_appointment').on('click',function(){
 })
 $('#bookappointment').on('click',function(e){
     e.preventDefault();
-    $('#appointmentContainer').toggle();
+    $('#appointmentContainer').show();
+    $('#paymentContainer').hide();
+
 })
 
 $('#showPayment').on('click',function(e){
     e.preventDefault();
-    $('#paymentContainer').toggle();
+    $('#appointmentContainer').hide();
+    $('#paymentContainer').show();
 })
 
 function generateRandomText(){

@@ -4,7 +4,8 @@
      header("Location: login.php");
  }
  require_once("lib/user.php");
-include_once('lib/header.php') 
+include_once('lib/header.php');
+require_once('lib/transactions.php'); 
  ?>
 
 
@@ -22,6 +23,19 @@ include_once('lib/header.php')
         <div class="col-md-10 mx-auto">
 <?php 
     viewAllUsers();
+?>
+</div>
+    </div>
+</section>
+
+
+
+<h3 class="text-center mb-3"> ALL PAYMENTS</h3>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+<?php 
+    printAllTransaction();
 ?>
 </div>
     </div>
