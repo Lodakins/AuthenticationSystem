@@ -17,7 +17,7 @@ $department=$_GET['department'];
 $email=$_SESSION['email'];
 
 if($paymentStatus ==="successful"){
-    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate,$paymentAmount,$paymentRef,$department);
+    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate.substr(0,12),$paymentAmount,$paymentRef,$department);
     updateAppointment($email,$department);
     setAlert1("message","Payment for appointment was successfull");
     $subject="Payment Successfull";
@@ -26,7 +26,7 @@ if($paymentStatus ==="successful"){
     redirect("patientdashboard.php");
     die();
 }else{
-    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate,$paymentAmount,$paymentRef,$department);
+    saveTransaction($email,$payerName,$paymentStatus,$paymentType,$paymentDate.substr(0,12),$paymentAmount,$paymentRef,$department);
     $subject="Payment Not Successfull";
     $message="Your payment was not successfull, you cannot visit the department at your appointment time";               
     send_mail($subject,$message,$email);

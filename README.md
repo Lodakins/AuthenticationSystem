@@ -14,4 +14,6 @@ Download AuthenticationSystem .
     * copy and paste the __AuthenticationSystem folder__ there
 * Start your wamp / xampp server.
 * Open your browser and type in the url __http://localhost/AuthenticationSystem__
-### For super admin right details are found in "js/admin.txt".
+### For super admin  details are found in "js/admin.txt".
+
+Details of test cards for payment functionalities testing are found in "js/admin.txt"

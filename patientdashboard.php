@@ -14,42 +14,45 @@ include_once('lib/header.php')
 <p> <?php  printAlert1();  ?> </p>
 <p> <?php printAlert();   ?> </p>
 <h2> Dashboard </h2>
-<p> Welcome, <?php echo $_SESSION['fullname'];   ?> You are logged in as (<?php echo $_SESSION['role']; ?>) and your ID is <?php  echo $_SESSION['loggedin'];?></p>
-<p> User Level Access: <?php  echo  $_SESSION['role']   ?></p> </p>
-<p> Departmemt: <?php  echo  $_SESSION['department'];   ?></p>
-<p> Date of Registration:  <?php  echo  $_SESSION['dob'];   ?></p> </p>
-<p> Date of Last Login:  <?php echo  $_SESSION['lastlogin'];   ?></p> </p>
-<!-- onClick="payWithRave()" -->
-<p><strong> For any appointment, there is charge of #3000, you make payment after booking an appointment, unless you will not be attended to.<strong></p>
-
+<p class="mb-3"><strong> For any appointment, there is charge of #3000, you make payment after booking an appointment, unless you will not be attended to.<strong></p>
 <p> 
     <ul>
-    <li> <button type="button" id="showPayment">Pay Bill</button></li>
-        <li> <a href="#" id="bookappointment"><button class="btn btn-primary"> Book Appointment</button> </a></li>
+    <li> <button type="button" id="showPayment" class="bg">Pay Bill</button></li>
+    <li> <a href="#" id="bookappointment"><button class="btn btn-primary"> Book Appointment</button> </a></li>
+    <li> <a href="#transactions" ><button type="button" id="showPayment" class="bg1"> View Transactions</button></a> </li>
     </ul>    
  </p>
+<p> Welcome, <?php echo $_SESSION['fullname'];   ?> You are logged in as (<?php echo $_SESSION['role']; ?>) and your ID is <?php  echo $_SESSION['loggedin'];?></p>
+<p><span class="label">User Level Access:</span>  <?php  echo  $_SESSION['role']   ?></p> </p>
+<p><span class="label">Departmemt:</span>  <?php  echo  $_SESSION['department'];   ?></p>
+<p><span class="label">Date of Registration: </span>  <?php  echo  $_SESSION['dob'];   ?></p> </p>
+<p><span class="label">Date of Last Login:</span>   <?php echo  $_SESSION['lastlogin'];   ?></p> </p>
+<!-- onClick="payWithRave()" -->
+
+
 
  <div id="paymentContainer" class="hide mb-3"> 
  <h3 class="text-center"> MAKE PAYMENT  </h3>
- <section class="container">
+ <section class="container mb-5">
     <div class="row">
-        <div class="col-md-12">
-            <input type="hidden" id="email" value="<?php echo  $_SESSION['email'] ?>" />
-            <label> Department </label>
-            <select id="department" class="form-control" required>
-                <option>--SELECT--</option>
-                <option value="laboratory"> Laboratory</option>
-                <option value="pharmacy"> Pharmacy</option>
-                <option value="child"> Child Care</option>
-                <option value="icu"> Intensive Care Unit</option>
-            </select>
-        </div>
-        <div class="col-md-12">
-                <p>
-                <button type="button" id="paymenButton">Pay Bill</button>
-                </p>
-        </div>
-        
+        <div class="col-md-6 mx-auto">
+            <div class="row">
+                    <div class="col-md-12">
+                    <input type="hidden" id="email" value="<?php echo  $_SESSION['email'] ?>" />
+                    <label> Department </label>
+                    <select id="department" class="form-control" required>
+                        <option>--SELECT--</option>
+                        <option value="laboratory"> Laboratory</option>
+                        <option value="pharmacy"> Pharmacy</option>
+                        <option value="child"> Child Care</option>
+                        <option value="icu"> Intensive Care Unit</option>
+                    </select>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <button type="button" id="paymenButton" class="btn btn-primary form-control">Pay Bill</button>
+                </div>
+            </div>
+        </div>       
     </div>
  </section>
  </div>
@@ -135,7 +138,7 @@ include_once('lib/header.php')
 </div>
 
 
-<h3 class="text-center mb-3"> ALL PAYMENTS</h3>
+<h3 class="text-center mb-3" id="transactions"> ALL TRANSACTIONS</h3>
  <section class="container-fluid">
     <div class="row">
         <div class="col-md-11 mx-auto">
@@ -175,10 +178,7 @@ include_once('lib/header.php')
                     email:email
                 },
                 success:function(res){
-                    console.log("Success message.....");
-                    console.log(res);
                     if(res==="true"){
-                        console.log("here in true ooo");
                         payWithRave()
                     }else{
                         console.log("here in false ooo");
@@ -209,10 +209,10 @@ include_once('lib/header.php')
         var x = getpaidSetup({
             PBFPubKey: API_publicKey,
             customer_email: email,
-            amount: 3000,
+            amount:3000,
             customer_phone: "234099940409",
             currency: "NGN",
-            payment_options: "card,account",
+            payment_options: "card",
             txref: ref,
             meta: [{
                 metaname: "flightID",
@@ -220,12 +220,9 @@ include_once('lib/header.php')
             }],
             onclose: function() {},
             callback: function(response) {
+                x.close();
+                console.log(response);
                 var txref = response.tx.txRef; // collect flwRef returned and pass to a server page to complete status check.
-                console.log(txref);
-                console.log(ref);
-                console.log(department);
-                console.log(email);
-                console.log("This is the response returned after a charge", response);
                 if (
                     response.tx.chargeResponseCode == "00" ||
                     response.tx.chargeResponseCode == "0"
@@ -242,7 +239,7 @@ include_once('lib/header.php')
                                     +response.tx.amount+"&type="+response.tx.paymentType+"&status="+response.tx.status+"&department="+department;
                 }
 
-                x.close(); // use this to close the modal immediately after payment.
+                 // use this to close the modal immediately after payment.
             }
         });
     }

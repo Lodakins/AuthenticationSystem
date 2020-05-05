@@ -38,8 +38,7 @@ function printTransaction($email){
       $allTransactions = scandir("db/transaction");
       $countTransactions = count($allTransactions);
       if($allTransactions > 2){
-          echo '<table class="table table-striped"> <thead class="thead-dark"><tr><th> Full Name</th><th> Payment Status</th><th> Payment Type</th><th>
-          Payment Amount</th> <th> Payment Date</th> <th> Payment Ref</th><th>Department</th><th>Email</th>
+          echo '<table class="table table-striped"> <thead class="thead-dark"><tr><th> Full Name</th><th> Payment Status</th><th> Payment Type</th><th> Payment Date</th><th>Payment Amount</th> <th> Payment Ref</th><th>Department</th><th>Email</th>
           </tr></thead><tbody>';
          for($counter=2; $counter <$countTransactions; $counter++){
                 if(strpos($allTransactions[$counter], $email) !== false){
@@ -74,8 +73,7 @@ function printAllTransaction(){
     $allTransactions = scandir("db/transaction");
     $countTransactions = count($allTransactions);
     if($allTransactions > 2){
-        echo '<table class="table table-striped"> <thead class="thead-dark"><tr><th> Payment Status</th><th> Payment Type</th><th>
-        Payment Amount</th> <th> Payment Date</th> <th> Payment Ref</th><th>Department</th><th>Email</th>
+        echo '<table class="table table-striped"> <thead class="thead-dark"><tr><th> Full Name</th><th> Payment Status</th><th> Payment Type</th><th> Payment Date</th><th>Payment Amount</th> <th> Payment Ref</th><th>Department</th><th>Email</th>
         </tr></thead><tbody>';
        for($counter=2; $counter <$countTransactions; $counter++){
               $file = file_get_contents("db/transaction/".$allTransactions[$counter]);
